@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet.js Share Location</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        #share-btn {
+            margin: 10px;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Map Container -->
+    <div id="map"></div>
+    <button id="share-btn">Share Location</button>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([16.0439, 120.3333], 13); // Example: Dagupan City, Pangasinan
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add a marker
+        var marker = L.marker([16.0439, 120.3333]).addTo(map)
+            .bindPopup('Dagupan City, Pangasinan')
+            .openPopup();
+
+        // Share Location Button Click
+        document.getElementById("share-btn").addEventListener("click", function() {
+            var latlng = marker.getLatLng();
+            var shareURL = `https://maps.google.com/?q=${latlng.lat},${latlng.lng}`;
+            window.open(shareURL, '_blank');
+        });
+    </script>
+
+</body>
+</html>
+
